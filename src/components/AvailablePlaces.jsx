@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Places from './Places.jsx';
 import Error from './Error.jsx';
+import { getPlaces } from '../https.js';
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [availiblesPlaces, setAvailablesPlaces] = useState([]);
@@ -13,12 +14,7 @@ export default function AvailablePlaces({ onSelectPlace }) {
       setIsLoading(true);
 
       try {
-        const response = await fetch("http://localhost:3000/places");
-        const data = await response.json();
-
-        if(!response.ok) {
-          throw new Error("Failed to load places");
-        }
+        const data = await getPlaces();
 
         setAvailablesPlaces(data.places);
       } catch (e) {
